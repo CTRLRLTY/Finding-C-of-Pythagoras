@@ -63,7 +63,7 @@ def pool_handler(n):
     try: # Setting batch_size 
         b_index = sys.argv.index("-b") 
         batch_size = int(sys.argv[b_index+1])
-    except: batch_size = 250000
+    except: batch_size = 1000000
     total = 0
     with mp.Pool() as pool:
         i_candidate = get_table(n)
@@ -77,11 +77,13 @@ def pool_handler(n):
             params = [(i_candidate, n, test_range) for test_range in test_ranges]
             print("=====Testing from {} to {}=====".format(test_ranges[0][0], test_ranges[-1][1]-1))
             for result in pool.imap_unordered(get_a, params):
-                if isinstance(result,tuple): return [result]
+                if isinstance(result,tuple): 
+                    pool.terminate()
+                    return [result]
             total += n_cores * batch_size
         return [(1,a)]
 
-if __name__ == "__main__":
+def main():
     n = int(input("[Input] enter n (int): "))
     dps = int(input("[Input] enter percision limit (int): "))
     mpmath.mp.dps = dps
@@ -89,7 +91,7 @@ if __name__ == "__main__":
     start = time.time()
     b = mpmath.floor(mpmath.sqrt(n))
     print("== n: ", n)
-    print("== b'",b)
+    print("== b':",b)
     print("[*] Limiting decimal percision to: ", mpmath.mp.dps)
     
 
@@ -101,3 +103,6 @@ if __name__ == "__main__":
     print("== c + a: {}".format(c + a))
     print("== c - a: {}".format(c - a))
     print("Result found in %d seconds" % (time.time() - start))
+
+if __name__ == "__main__":
+    main() 
