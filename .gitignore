@@ -5,3 +5,4 @@ cli.py
 __pycache__/
 build/
 dist/
+venv/
