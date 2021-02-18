@@ -11,6 +11,7 @@ RESULT_WINS = RUN_OUTPUT_WIN.items()
 N_CORES = os.cpu_count()
 BATCH_SIZE = 0
 N = 0
+DPS = 0
 
 def RUN_OUTPUT_CLEAR():
     for key, WIN in RESULT_WINS:
@@ -33,7 +34,7 @@ def get_pool_result(result_pipes, terminate_event):
 def divide_work(start):
     i_candidate = get_table(N)
     test_ranges = [(start + y * BATCH_SIZE, start + (y + 1) * BATCH_SIZE) for y in range(N_CORES)]
-    work_batch = [(i_candidate, N, test_range) for test_range in test_ranges]
+    work_batch = [(i_candidate, N, test_range, DPS) for test_range in test_ranges]
     min = test_ranges[0][0]
     max = test_ranges[-1][1] - 1
     return (work_batch,min, max)
@@ -51,11 +52,13 @@ def create_thread(pool,start,terminate_event):
     next_start_range = start + N_CORES * BATCH_SIZE
     return (active_thread,next_start_range)
 
-def pool_handler(n,min_range = 0,batch_size = 1000000, terminate_event = None):
+def pool_handler(n,min_range = 0,batch_size = 1000000, terminate_event = None, dps = 15):
     global BATCH_SIZE
     global N
+    global DPS
     N = n
     BATCH_SIZE = batch_size
+    DPS = dps
     RUN_OUTPUT_CLEAR()
 
     """Check if i=1 resulted in a"""

@@ -1,11 +1,9 @@
 import mpmath
+from window import INPUT_DPS_WIN
+from constant import *
 import multiprocessing as mp
-from window import sg
-from typing import Union
 
-IPC_DATA = list[tuple]
-
-def get_i(b: int,target: tuple) -> None:
+def get_i(b,target):
     for x in range(10):
         if str(target) in str(b+x)[-1]: return x
 
@@ -27,7 +25,7 @@ def get_table(n):
     return i_candidate
 
 
-def __guess_a(i: int,n: int) -> mpmath.mpf:
+def __guess_a(i,n):
     b = mpmath.floor(mpmath.sqrt(n))
     c = b + i
     c_squared = mpmath.power(c,2)
@@ -35,8 +33,10 @@ def __guess_a(i: int,n: int) -> mpmath.mpf:
     a = mpmath.sqrt(a_squared)
     return (b,c,c_squared,a_squared,a)
 
-def get_a(data: IPC_DATA) -> Union[tuple,None]:
-    i_list,n,test_range = data
+def get_a(data):
+
+    i_list,n,test_range,dps = data
+    mpmath.mp.dps = dps
     for test in range(test_range[0],test_range[1],10):
         temp_list = [test+y for y in i_list]
         for y in temp_list:
@@ -44,4 +44,3 @@ def get_a(data: IPC_DATA) -> Union[tuple,None]:
 
             if mpmath.isint(result[-1]): #check if a is int
                 return (y,*result,result[1]-result[-1],result[1]+result[-1]) #return i,b,c,c^2,a^2,a,p,q
-                #return (y, *result)

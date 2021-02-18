@@ -30,7 +30,7 @@ def main():
             
             if not finding_c_thread or not finding_c_thread.is_alive():
                 # If the program are not currently finding a c 
-                finding_c_thread = Thread(target=pool_handler, args=(n, i), kwargs={"terminate_event": run_pause_event}, daemon=True) #Making it a daemon thread so when we close the program, it will terminate child process
+                finding_c_thread = Thread(target=pool_handler, args=(n, i), kwargs={"terminate_event": run_pause_event, "dps": dps}, daemon=True) #Making it a daemon thread so when we close the program, it will terminate child process
                 if not finding_c_thread.is_alive():
                     finding_c_thread.start()
         if event == "Stop" and finding_c_thread: #If stop button is clicked and there's an active finding_c_thread

@@ -21,6 +21,8 @@ layout = [
 
 window = sg.Window('something', layout, margins=(0,0))
 
+INPUT_DPS_WIN = window[INPUT_DPS]
+
 RUN_OUTPUT_WIN = {
   "Progress": window[RUN_OUTPUT["Progress"]],
   "I": window[RUN_OUTPUT["I"]],
