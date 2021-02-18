@@ -36,12 +36,15 @@ def __guess_a(i: int,n: int) -> mpmath.mpf:
     return (b,c,c_squared,a_squared,a)
 
 def get_a(data: IPC_DATA) -> Union[tuple,None]:
-    #current_proc_fullname = mp.current_process().name.partition("Pool")
-    #current_proc_fnworknum = current_proc_fullname[2]
-    #print(mp.current_process().name)
     i_list,n,test_range = data
     for test in range(test_range[0],test_range[1],10):
         temp_list = [test+y for y in i_list]
         for y in temp_list:
-            *guess_result,a = __guess_a(y,n)
-            if mpmath.isint(a): return (y,*guess_result,a)
+            result = __guess_a(y,n)
+
+            if mpmath.isint(result[-1]): #check if a is int
+                deb = (*result,result[1]-result[-1],result[1]+result[-1])
+                print(deb)
+                print(deb[-3])
+                return (y,*result,result[1]-result[-1],result[1]+result[-1]) #return i,b,c,c^2,a^2,a,p,q
+                #return (y, *result)

@@ -9,10 +9,12 @@ RUN_ELEMENTS = [[sg.Text(size=(40,1), key=k, pad=(0,0), background_color=RUN_ELE
 RUN_OUTPUT_DIV = sg.Column([*RUN_ELEMENTS],background_color=RUN_OUTPUT_BGCOLOR)
 
 layout = [
-  [sg.Text("Input N (int)")],
+  [sg.Text("Input N (Required: int)")],
   [sg.Input(size=(40,1), key=INPUT_N)],
-  [sg.Text("Input Precisiion (int)")],
+  [sg.Text("Input (Required: int)")],
   [sg.Input(size=(40,1), key=INPUT_DPS)],
+  [sg.Text("Input I (Optional: int)")],
+  [sg.Input(size=(40, 1), key=INPUT_I)],
   [RUN_OUTPUT_DIV],
   [sg.Button(BUTTON_RUN)],
 ]
@@ -27,4 +29,6 @@ RUN_OUTPUT_WIN = {
   "C^2": window[RUN_OUTPUT["C^2"]],
   "A^2": window[RUN_OUTPUT["A^2"]],
   "A": window[RUN_OUTPUT["A"]],
+  "P": window[RUN_OUTPUT["P"]],
+  "Q": window[RUN_OUTPUT["Q"]]
 }
