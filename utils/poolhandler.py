@@ -1,31 +1,35 @@
 import os
 import mpmath
+from window import RUN_OUTPUT_WIN
 import multiprocessing as mp
 
 from utils.find_c import __guess_a, get_a,get_table
 
-def pool_handler(n):
-    n_cores = os.cpu_count()
-    print("[*] Available Cores: ",n_cores)
-    try: # Setting batch_size 
-        b_index = sys.argv.index("-b") 
-        batch_size = int(sys.argv[b_index+1])
-    except: batch_size = 1000000
-    total = 0
-    with mp.Pool() as pool:
-        i_candidate = get_table(n)
-        print("[*] using batch size: ", batch_size)
-        print("[*] using i candidate: ", i_candidate)
+PROGRESS_WIN = RUN_OUTPUT_WIN.pop("Progress")
+RESULT_WINS = RUN_OUTPUT_WIN.items()
 
-        a = __guess_a(1,n) #first check
+def pool_handler(n: int, batch_size: int) -> None:
+    total = 0
+    n_cores = os.cpu_count()
+
+    with mp.Pool(n_cores) as pool:
+        i_candidate = get_table(n)
+
+        *guess_result,a = __guess_a(1,n) #first check
         while not mpmath.isint(a): #if i=1 is not the answer
             test_ranges = [(total + y * batch_size, total + (y+1) * batch_size) for y in range(n_cores)]
             params = [(i_candidate, n, test_range) for test_range in test_ranges]
-            print("=====Testing from {} to {}=====".format(test_ranges[0][0], test_ranges[-1][1]-1))
+            PROGRESS_WIN.update("Finding from {} to {}".format(test_ranges[0][0], test_ranges[-1][1]-1))
             for result in pool.imap_unordered(get_a, params):
-                if isinstance(result,tuple): 
+                if isinstance(result,tuple):
+                    a = result[-1] # Setting the a first so the parent while loop breaks as well
+                    ctr = 0
+                    for key,WIN in RESULT_WINS:
+                        WIN.update(f"{key}: " + str(result[ctr]))
+                        ctr += 1
                     pool.terminate()
-                    return [result]
-            total += n_cores * batch_size
-        return [(1,a)] #this returns only if i=1 is the answer of C
+                    break
 
+            total += n_cores * batch_size
+        PROGRESS_WIN.update("Finished!")
+        pool.join()

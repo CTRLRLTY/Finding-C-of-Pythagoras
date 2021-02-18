@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 from constant import *
 
 RUN_OUTPUT_BGCOLOR = "red"
-RUN_ELEM_COLOR = "BLUE"
+RUN_ELEM_COLOR = "#94538a"
 
 RUN_ELEMENTS = [[sg.Text(size=(40,1), key=k, pad=(0,0), background_color=RUN_ELEM_COLOR)] for k in RUN_OUTPUT.values()]
 

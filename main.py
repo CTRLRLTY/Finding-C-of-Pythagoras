@@ -1,31 +1,37 @@
 import time
 import mpmath
-import PySimpleGUI as sg
+from window import sg, window
+from constant import *
+from threading import Thread, active_count as active_thread
+from multiprocessing import freeze_support
+
 
 from utils.poolhandler import pool_handler
 
 
-
 def main():
-    n = int(input("[Input] enter n (int): "))
-    dps = int(input("[Input] enter percision limit (int): "))
-    mpmath.mp.dps = dps
-    
-    b = mpmath.floor(mpmath.sqrt(n))
-    print("== n: ", n)
-    print("== b':",b)
-    print("[*] Limiting decimal percision to: ", mpmath.mp.dps)
-    
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
+            break
+        if event == "Run":
+            if not values[INPUT_N].isdigit() or not values[INPUT_DPS].isdigit():
+                continue
+            n = int(values[INPUT_N])
+            dps = int(values[INPUT_DPS])
+            batch_size = 1000000
+            mpmath.mp.dps = dps
+            
+            if active_thread() < 2: 
+                # If the program are not currently finding a c 
+                finding_c_thread = Thread(target=pool_handler, args=(n, batch_size))
+                if not finding_c_thread.is_alive():
+                    finding_c_thread.start()
 
-    start = time.time() # Begin countdown
-    i,a = pool_handler(n)[0]
-    c = b + i
-    print("###### FOUND a ######")
-    print("** Found a on i: {} **".format(i))
-    print("== a value: ", a)
-    print("== c + a: {}".format(c + a))
-    print("== c - a: {}".format(c - a))
-    print("Result found in %d seconds" % (time.time() - start))
+    window.close()
+
 
 if __name__ == "__main__":
-    main() 
+    freeze_support() #Because windows sucks we have to call this stupid boiler plate
+    main()
+
