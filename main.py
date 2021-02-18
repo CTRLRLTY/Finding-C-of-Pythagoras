@@ -12,7 +12,7 @@ from utils.poolhandler import pool_handler
 def main():
     finding_c_thread = None
     while True:
-        event, values = window.read(timeout=1)
+        event, values = window.read(timeout=1000)
         print("Active Thread:", active_thread(),end="")
         if event == sg.WINDOW_CLOSED:
             break

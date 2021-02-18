@@ -11,7 +11,7 @@ RUN_OUTPUT_DIV = sg.Column([*RUN_ELEMENTS],background_color=RUN_OUTPUT_BGCOLOR)
 layout = [
   [sg.Text("Input N (Required: int)")],
   [sg.Input(size=(40,1), key=INPUT_N)],
-  [sg.Text("Input (Required: int)")],
+  [sg.Text("Input Percision (Required: int)")],
   [sg.Input(size=(40,1), key=INPUT_DPS)],
   [sg.Text("Input I (Optional: int)")],
   [sg.Input(size=(40, 1), key=INPUT_I)],
