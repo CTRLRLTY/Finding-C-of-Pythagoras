@@ -5,6 +5,7 @@ INPUT_I = "-INPUT-I-"
 
 # BUTTONS
 BUTTON_RUN = "Run"
+BUTTON_STOP = "Stop"
 
 # OUTPUT
 RUN_OUTPUT = {

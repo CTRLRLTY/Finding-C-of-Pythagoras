@@ -43,8 +43,5 @@ def get_a(data: IPC_DATA) -> Union[tuple,None]:
             result = __guess_a(y,n)
 
             if mpmath.isint(result[-1]): #check if a is int
-                deb = (*result,result[1]-result[-1],result[1]+result[-1])
-                print(deb)
-                print(deb[-3])
                 return (y,*result,result[1]-result[-1],result[1]+result[-1]) #return i,b,c,c^2,a^2,a,p,q
                 #return (y, *result)

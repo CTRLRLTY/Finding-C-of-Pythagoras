@@ -16,7 +16,7 @@ layout = [
   [sg.Text("Input I (Optional: int)")],
   [sg.Input(size=(40, 1), key=INPUT_I)],
   [RUN_OUTPUT_DIV],
-  [sg.Button(BUTTON_RUN)],
+  [sg.Button(BUTTON_RUN), sg.Button(BUTTON_STOP)],
 ]
 
 window = sg.Window('something', layout, margins=(0,0))
