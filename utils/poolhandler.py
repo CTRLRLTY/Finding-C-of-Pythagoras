@@ -57,9 +57,13 @@ def pool_handler(n,min_range = 0,batch_size = 1000000, terminate_event = None):
     N = n
     BATCH_SIZE = batch_size
     RUN_OUTPUT_CLEAR()
-    result = (1, *(__guess_a(1, n)))  # first check
+
+    """Check if i=1 resulted in a"""
+    result = (1, *(__guess_a(1, n)))
     if mpmath.isint(result[-1]): RUN_OUTPUT_UPDATE(result)
     else:
+        """If i=1 doesnt result in a, start the formula loop"""
+
         min_range = min_range - min_range % 10  # set last digit to 0
 
         get_pool_result_thread = None
