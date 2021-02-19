@@ -1,4 +1,4 @@
-import os
+from os import cpu_count
 import mpmath
 from window import RUN_OUTPUT_WIN
 import multiprocessing as mp
@@ -8,7 +8,7 @@ from utils.find_c import __guess_a, get_a,get_table
 
 PROGRESS_WIN = RUN_OUTPUT_WIN.pop("Progress")
 RESULT_WINS = RUN_OUTPUT_WIN.items()
-N_CORES = os.cpu_count()
+N_CORES = cpu_count()
 BATCH_SIZE = 0
 N = 0
 DPS = 0

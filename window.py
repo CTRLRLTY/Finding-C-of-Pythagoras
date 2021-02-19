@@ -8,13 +8,18 @@ RUN_ELEMENTS = [[sg.Text(size=(40,1), key=k, pad=(0,0), background_color=RUN_ELE
 
 RUN_OUTPUT_DIV = sg.Column([*RUN_ELEMENTS],background_color=RUN_OUTPUT_BGCOLOR)
 
+INPUT_DIV = sg.Column([
+    [sg.Text("Input N (Required: int)",pad=(0,0))],
+    [sg.Input(size=(40,1), key=INPUT_N,pad=(0,0))],
+    [sg.Text("Input Percision (Required: int)", pad=(0,0))],
+    [sg.Input(size=(40,1), key=INPUT_DPS,pad=(0,0))],
+    [sg.Text("Input I (Optional: int)",pad=(0,0))],
+    [sg.Input(size=(40, 1), key=INPUT_I,pad=(0,0))],
+])
+
+
 layout = [
-  [sg.Text("Input N (Required: int)")],
-  [sg.Input(size=(40,1), key=INPUT_N)],
-  [sg.Text("Input Percision (Required: int)")],
-  [sg.Input(size=(40,1), key=INPUT_DPS)],
-  [sg.Text("Input I (Optional: int)")],
-  [sg.Input(size=(40, 1), key=INPUT_I)],
+  [INPUT_DIV],
   [RUN_OUTPUT_DIV],
   [sg.Button(BUTTON_RUN), sg.Button(BUTTON_STOP)],
 ]

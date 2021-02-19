@@ -1,12 +1,8 @@
-import time
 import mpmath
 from window import sg, window
 from constant import *
 from threading import Thread, Event
 from multiprocessing import freeze_support
-
-
-
 from utils.poolhandler import pool_handler
 
 

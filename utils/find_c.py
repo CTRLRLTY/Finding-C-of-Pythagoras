@@ -1,7 +1,4 @@
 import mpmath
-from window import INPUT_DPS_WIN
-from constant import *
-import multiprocessing as mp
 
 def get_i(b,target):
     for x in range(10):
